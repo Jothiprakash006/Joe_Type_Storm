@@ -342,6 +342,20 @@ export function useGameEngine() {
     }
   }, [gameLoop]);
 
+  const quitToMenu = useCallback(() => {
+    cancelAnimationFrame(animFrameRef.current);
+    wordsRef.current = [];
+    particlesRef.current = [];
+    popupsRef.current = [];
+    setInputValue('');
+    setScore(0);
+    scoreRef.current = 0;
+    setCombo(0);
+    comboRef.current = 0;
+    setGameState('menu');
+    gameStateRef.current = 'menu';
+  }, []);
+
   const handleInput = useCallback((value: string) => {
     const v = value.toLowerCase().trim();
     setInputValue(v);
@@ -411,6 +425,7 @@ export function useGameEngine() {
     startGame,
     pauseGame,
     resumeGame,
+    quitToMenu,
     handleInput,
     setHighScores,
     LIVES,

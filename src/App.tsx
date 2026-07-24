@@ -821,7 +821,7 @@ export default function App() {
     gameState, score, level, combo, maxCombo, lives, wordsTyped, wpm,
     highScores, shakeScreen, inputValue, isCustomMode, currentUsername,
     words, particles, popups,
-    startGame, pauseGame, resumeGame, handleInput,
+    startGame, pauseGame, resumeGame, quitToMenu, handleInput,
     LIVES: maxLives,
   } = engine;
 
@@ -852,9 +852,10 @@ export default function App() {
   }, [startGame]);
 
   const handleQuit = useCallback(() => {
+    quitToMenu();
     setMenuState('menu');
     lastCustomWordsRef.current = [];
-  }, []);
+  }, [quitToMenu]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -877,7 +878,7 @@ export default function App() {
   }, [gameState, pauseGame, resumeGame, handleRestart]);
 
   // Show start screen
-  if (menuState === 'menu' && gameState !== 'playing' && gameState !== 'paused') {
+  if (menuState === 'menu' || gameState === 'menu') {
     return (
       <StartScreen
         onStart={handleStart}
